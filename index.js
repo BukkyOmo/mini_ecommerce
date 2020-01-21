@@ -12,11 +12,11 @@ app.use(morgan('combined'));
 const port = process.env.PORT || 3000;
 
 app.get('/', (req, res) => {
-    res.send('Hello Template!')
-})
+  res.send('Hello Template!');
+});
 
 app.listen(port, () => {
-    console.log(`Application listening on port ${port}`)
+  console.log(`Application listening on port ${port}`);
 });
 
 module.exports = app;

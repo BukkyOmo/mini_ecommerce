@@ -16,8 +16,10 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 const port = process.env.PORT || 3000;
 
-app.get('/', (req, res) => {
-  res.send('Hello Template!');
+app.get('/', (request, response) => {
+  response.status(200).json({
+    message: 'Hello Template',
+  });
 });
 
 app.listen(port, () => {

@@ -1,7 +1,7 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const morgan = require('morgan');
-const cors = require('cors');
+import express from 'express';
+import bodyParser from 'body-parser';
+import morgan from 'morgan';
+import cors from 'cors';
 
 const app = express();
 app.use(cors());
@@ -19,4 +19,4 @@ app.listen(port, () => {
   console.log(`Application listening on port ${port}`);
 });
 
-module.exports = app;
+export default app;

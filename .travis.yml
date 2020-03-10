@@ -1,0 +1,10 @@
+language: node_js
+node_js:
+  - "10.13.0"
+install:
+  - npm install
+before_script:
+  - npm run migrations:down
+  - npm run migrations:up
+script:
+    - npm run test

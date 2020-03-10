@@ -4,7 +4,7 @@
   "description": "A template for starting a node-express application without delay.",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --require @babel/register 'src/**/**spec.js'",
+    "test": "mocha --require @babel/register 'src/**/**spec.js' --exit",
     "start": "babel-node  ./index.js",
     "start_dev": "nodemon --exec babel-node ./index.js",
     "lint": "eslint 'src/**/*.js' --fix",

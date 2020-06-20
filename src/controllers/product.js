@@ -215,6 +215,32 @@ class ProductController {
             });
         }
     }
+
+    static async deleteProduct(req, res) {
+        const { product_id } = req.params;
+        const { id: created_by } = req.user;
+        Product.findByIdAndDelete(product_id).exec((err, product) => {
+            if (!product) {
+                return res.status(400).json({
+                    message: 'Product you are trying to delete does not exist in database',
+                    statusCode: 400,
+                    status: 'Failure'
+                });
+            }
+            if (created_by != product.created_by) {
+                return res.status(400).json({
+                    message: 'Sorry, you cannot delete this product',
+                    statusCode: 400,
+                    status: 'Failure'
+                });
+            }
+            return res.status(200).json({
+                message: 'Product deleted successfully',
+                statusCode: 200,
+                status: 'Success'
+            });
+        });
+    }
 }
 
 export default ProductController;

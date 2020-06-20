@@ -6,5 +6,6 @@ import verifyToken from '../middlewares/authenticate';
 const router = Router();
 
 router.post('/:product_id', verifyToken, CartMiddleware.ValidateCartProduct, CartController.addToCart);
+router.delete('/:product_id', verifyToken, CartController.removeFromCart);
 
 export default router;

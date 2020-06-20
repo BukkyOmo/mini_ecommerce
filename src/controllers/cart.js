@@ -2,6 +2,12 @@ import Cart from '../models/cart';
 import Product from '../models/product';
 
 class CartController {
+    /**
+    * user add product to cart
+    * @param  {object} req - object
+    * @param {object} res - response object
+    * @return {json} res.json
+    */
     static async addToCart(req, res) {
         const { quantity } = req.body;
         const { id: user_id } = req.user;
@@ -15,7 +21,7 @@ class CartController {
                         status: 'Failure'
                     });
                 }
-                Cart.findOne({ product_id }).exec((err, item) => {
+                Cart.findOne({ product_id, user_id }).exec((err, item) => {
                     if (item) {
                         return res.status(400).json({
                             message: 'Product already added to cart',
@@ -45,6 +51,48 @@ class CartController {
                     });
                 });
             });
+        } catch (error) {
+            return res.status(500).json({
+                message: 'Internal server error',
+                statusCode: 500,
+                status: 'Failure'
+            });
+        }
+    }
+
+    /**
+    * user remove product from cart
+    * @param  {object} req - object
+    * @param {object} res - response object
+    * @return {json} res.json
+    */
+    static async removeFromCart(req, res) {
+        const { product_id } = req.params;
+        const { id: user_id } = req.user;
+        try {
+            Cart.findByIdAndDelete(product_id)
+                .where('user_id', user_id)
+                .exec((err, product) => {
+                    if (err) {
+                        return res.status(400).json({
+                            message: 'Product failed to remove from cart',
+                            statusCode: 400,
+                            status: 'Failure'
+                        });
+                    }
+                    if (!product) {
+                        return res.status(400).json({
+                            message: 'Product does not exist in your cart',
+                            statusCode: 400,
+                            status: 'Failure'
+                        });
+                    }
+                    return res.status(200).json({
+                        message: 'Product successfully removed from cart',
+                        statusCode: 200,
+                        status: 'Success'
+                    });
+                });
         } catch (error) {
             return res.status(500).json({
                 message: 'Internal server error',

@@ -216,6 +216,12 @@ class ProductController {
         }
     }
 
+    /**
+    * user delete product
+    * @param  {object} req - object
+    * @param {object} res - response object
+    * @return {json} res.json
+    */
     static async deleteProduct(req, res) {
         const { product_id } = req.params;
         const { id: created_by } = req.user;

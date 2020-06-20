@@ -29,7 +29,7 @@ class AuthUtils {
 	* @param {string} (password, hashedpassword)
 	* @returns {string} password
 	*/
-    static async encodeToken(payload) {
+    static encodeToken(payload) {
         return jwt.sign(payload, process.env.SECRET, { expiresIn: 60 * 60 });
     }
 

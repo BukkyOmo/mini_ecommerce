@@ -6,5 +6,6 @@ import verifyToken from '../middlewares/authenticate';
 const router = Router();
 
 router.post('/', verifyToken, ProductMiddleware.ValidateCreateProduct, ProductController.createProduct);
+router.get('/', verifyToken, ProductController.getProductsToBuy);
 
 export default router;

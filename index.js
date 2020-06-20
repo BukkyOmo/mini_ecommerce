@@ -7,6 +7,7 @@ import YAML from 'yamljs';
 import db from './config/database';
 import auth from './src/routes/auth';
 import product from './src/routes/product';
+import cart from './src/routes/cart';
 
 const swaggerDocument = YAML.load('./swagger.yaml');
 
@@ -21,6 +22,7 @@ const port = process.env.PORT || 8800;
 
 app.use('/api/v1/auth', auth);
 app.use('/api/v1/products', product);
+app.use('/api/v1/carts', cart);
 
 app.get('/', (req, res) => {
   res.status(200).json({

@@ -18,8 +18,8 @@ describe('Test the home page', () => {
     chai
       .request(app)
       .get('/')
-      .end((error, response) => {
-        expect(response.body.message).to.be.equal('Hello Template');
+      .end((err, res) => {
+        expect(res.body.message).to.be.equal('Welcome to my mini Ecommerce Application');
         done();
       });
   });

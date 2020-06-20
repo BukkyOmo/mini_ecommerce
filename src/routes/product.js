@@ -8,5 +8,6 @@ const router = Router();
 router.post('/', verifyToken, ProductMiddleware.ValidateCreateProduct, ProductController.createProduct);
 router.get('/', verifyToken, ProductController.getProductsToBuy);
 router.get('/mine', verifyToken, ProductController.getProductsByUser);
+router.get('/:product_id', verifyToken, ProductController.getOneProduct);
 
 export default router;

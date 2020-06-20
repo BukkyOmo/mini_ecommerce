@@ -7,5 +7,6 @@ const router = Router();
 
 router.post('/:product_id', verifyToken, CartMiddleware.ValidateCartProduct, CartController.addToCart);
 router.delete('/:product_id', verifyToken, CartController.removeFromCart);
+router.get('/', verifyToken, CartController.getAllProductsInCart);
 
 export default router;

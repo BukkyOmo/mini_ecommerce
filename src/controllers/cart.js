@@ -101,6 +101,33 @@ class CartController {
             });
         }
     }
+
+    /**
+    * user get all product in their cart
+    * @param  {object} req - object
+    * @param {object} res - response object
+    * @return {json} res.json
+    */
+    static async getAllProductsInCart(req, res) {
+        const { id: user_id } = req.user;
+        Cart.find({})
+            .where('user_id', user_id)
+            .exec((err, products) => {
+            if (err) {
+                return res.status(400).json({
+                    message: 'Products in cart failed to fetch',
+                    statusCode: 400,
+                    status: 'Failure'
+                });
+            }
+            return res.status(200).json({
+                message: 'Products successfully fetched from cart',
+                statusCode: 200,
+                status: 'Success',
+                products
+            });
+        })
+    }
 }
 
 export default CartController;

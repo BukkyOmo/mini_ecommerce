@@ -53,13 +53,42 @@ class ProductController {
                 .exec((err, product) => {
                     if (err) {
                         return res.status(400).json({
-                            message: 'Product failed to fetch',
+                            message: 'Products failed to fetch',
                             statusCode: 400,
                             status: 'Failure'
                         });
                     }
                     return res.status(200).json({
                         message: 'Products created by other users fetched successfully',
+                        statusCode: 200,
+                        status: 'Success',
+                        product
+                    });
+                });
+        } catch (error) {
+            return res.status(500).json({
+                message: 'Internal server error',
+                statusCode: 500,
+                status: 'Failure'
+            });
+        }
+    }
+
+    static async getProductsByUser(req, res) {
+        const { id: created_by } = req.user;
+        try {
+            Product.find({})
+                .where('created_by', created_by)
+                .exec((err, product) => {
+                    if (err) {
+                        return res.status(400).json({
+                            message: 'Products failed to fetch',
+                            statusCode: 400,
+                            status: 'Failure'
+                        });
+                    }
+                    return res.status(200).json({
+                        message: 'Your products have been fetched successfully',
                         statusCode: 200,
                         status: 'Success',
                         product

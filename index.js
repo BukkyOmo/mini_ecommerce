@@ -5,7 +5,8 @@ import cors from 'cors';
 import swaggerUi from 'swagger-ui-express';
 import YAML from 'yamljs';
 import db from './config/database';
-import auth from './src/routes/auth'
+import auth from './src/routes/auth';
+import product from './src/routes/product';
 
 const swaggerDocument = YAML.load('./swagger.yaml');
 
@@ -19,6 +20,7 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 const port = process.env.PORT || 8800;
 
 app.use('/api/v1/auth', auth);
+app.use('/api/v1/products', product);
 
 app.get('/', (req, res) => {
   res.status(200).json({

@@ -29,7 +29,7 @@ class AuthController{
                 user.save((err, data) => {
                     if (err) {
                         return res.status(400).json({
-                            message: 'User failed to saved',
+                            message: 'User failed to save',
                             statusCode: 400,
                             status: 'Failure'
                         });

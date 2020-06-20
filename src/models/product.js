@@ -5,6 +5,7 @@ const productSchema = new Schema({
         type: String,
         required: true,
         trim: true,
+        minlength: 3,
         maxlength: 50
     },
     price: {
@@ -25,7 +26,8 @@ const productSchema = new Schema({
     },
     created_by: {
         type: Schema.Types.ObjectId,
-        ref: 'User'
+        ref: 'User',
+        required: true
     },
     created_at: {
         type: Date,

@@ -4,6 +4,7 @@ import morgan from 'morgan';
 import cors from 'cors';
 import swaggerUi from 'swagger-ui-express';
 import YAML from 'yamljs';
+import db from './src/config/database';
 
 const swaggerDocument = YAML.load('./swagger.yaml');
 
@@ -11,15 +12,20 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use(morgan('combined'));
+app.use(morgan('dev'));
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 const port = process.env.PORT || 8800;
 
 app.get('/', (req, res) => {
   res.status(200).json({
-    message: 'Hello Template',
+    message: 'Welcome to my mini Ecommerce Application',
   });
+});
+
+db.on("error", console.error.bind(console, "connection error:"));
+db.once("open", () => {
+  console.log("database connected successfully");
 });
 
 app.listen(port, () => {

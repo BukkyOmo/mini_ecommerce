@@ -9,5 +9,6 @@ router.post('/', verifyToken, ProductMiddleware.ValidateCreateProduct, ProductCo
 router.get('/', verifyToken, ProductController.getProductsToBuy);
 router.get('/mine', verifyToken, ProductController.getProductsByUser);
 router.get('/:product_id', verifyToken, ProductController.getOneProduct);
+router.patch('/:product_id', verifyToken, ProductMiddleware.ValidateCreateProduct, ProductController.updateProduct);
 
 export default router;

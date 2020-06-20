@@ -30,7 +30,7 @@ const userSchema = new Schema({
         required: true,
         trim: true,
         minlength: 8,
-        maxlength: 50
+        maxlength: 100
     },
     created_at: {
         type: Date,

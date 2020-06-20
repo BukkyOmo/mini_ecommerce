@@ -4,7 +4,8 @@ import morgan from 'morgan';
 import cors from 'cors';
 import swaggerUi from 'swagger-ui-express';
 import YAML from 'yamljs';
-import db from './src/config/database';
+import db from './config/database';
+import auth from './src/routes/auth'
 
 const swaggerDocument = YAML.load('./swagger.yaml');
 
@@ -16,6 +17,8 @@ app.use(morgan('dev'));
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 const port = process.env.PORT || 8800;
+
+app.use('/api/v1/auth', auth);
 
 app.get('/', (req, res) => {
   res.status(200).json({

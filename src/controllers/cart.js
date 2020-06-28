@@ -9,9 +9,9 @@ class CartController {
     * @return {json} res.json
     */
     static async addToCart(req, res) {
-        const { quantity } = req.body;
         const { id: user_id } = req.user;
         const { product_id } = req.params;
+        const update = { $inc: { quantity: 1 } };
         try {
             Product.findById(product_id).exec((err, product) => {
                 if (!product) {
@@ -21,34 +21,19 @@ class CartController {
                         status: 'Failure'
                     });
                 }
-                Cart.findOne({ product_id, user_id }).exec((err, item) => {
+                Cart.findOneAndUpdate({ product_id, user_id }, update, {
+                    upsert: true,
+                    setDefaultsOnInsert: true,
+                    new: true
+                }).exec((err, item) => {
                     if (item) {
-                        return res.status(400).json({
-                            message: 'Product already added to cart',
-                            statusCode: 400,
-                            status: 'Failure'
-                        });
-                    }
-                    const cart = new Cart({
-                        product_id,
-                        quantity,
-                        user_id
-                    });
-                    cart.save((err, cart) => {
-                        if (err) {
-                            return res.status(400).json({
-                                message: 'Product failed to add to cart',
-                                statusCode: 400,
-                                status: 'Failure'
-                            });
-                        }
                         return res.status(201).json({
-                            message: 'Product successfully saved in cart',
+                            message: 'Product added to cart successfully',
                             statusCode: 201,
                             status: 'Success',
-                            cart
+                            product: item
                         });
-                    });
+                    }
                 });
             });
         } catch (error) {
@@ -112,21 +97,22 @@ class CartController {
         const { id: user_id } = req.user;
         Cart.find({})
             .where('user_id', user_id)
+            .sort({ 'created_at': -1 })
             .exec((err, products) => {
-            if (err) {
-                return res.status(400).json({
-                    message: 'Products in cart failed to fetch',
-                    statusCode: 400,
-                    status: 'Failure'
+                if (err) {
+                    return res.status(400).json({
+                        message: 'Products in cart failed to fetch',
+                        statusCode: 400,
+                        status: 'Failure'
+                    });
+                }
+                return res.status(200).json({
+                    message: 'Products successfully fetched from cart',
+                    statusCode: 200,
+                    status: 'Success',
+                    products
                 });
-            }
-            return res.status(200).json({
-                message: 'Products successfully fetched from cart',
-                statusCode: 200,
-                status: 'Success',
-                products
-            });
-        })
+            })
     }
 }
 

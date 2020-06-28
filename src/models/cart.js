@@ -7,8 +7,7 @@ const cartSchema = new Schema({
     },
     quantity: {
         type: Number,
-        required: true,
-        trim: true
+        default: 1
     },
     user_id: {
         type: Schema.Types.ObjectId,

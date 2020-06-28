@@ -30,7 +30,7 @@ class AuthUtils {
 	* @returns {string} password
 	*/
     static encodeToken(payload) {
-        return jwt.sign(payload, process.env.SECRET, { expiresIn: 60 * 60 });
+        return jwt.sign(payload, process.env.SECRET, { expiresIn: '1d' });
     }
 
 	/**

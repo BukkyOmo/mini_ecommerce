@@ -21,7 +21,7 @@ class CartController {
                         status: 'Failure'
                     });
                 }
-                Cart.findOneAndUpdate({ product_id, user_id }, update, {
+                Cart.findOneAndUpdate({ product: product_id, user: user_id }, update, {
                     upsert: true,
                     setDefaultsOnInsert: true,
                     new: true
@@ -55,8 +55,8 @@ class CartController {
         const { product_id } = req.params;
         const { id: user_id } = req.user;
         try {
-            Cart.findByIdAndDelete(product_id)
-                .where('user_id', user_id)
+            Cart.findOneAndDelete({ product: product_id })
+                .where('user', user_id)
                 .exec((err, product) => {
                     if (err) {
                         return res.status(400).json({
@@ -96,7 +96,8 @@ class CartController {
     static async getAllProductsInCart(req, res) {
         const { id: user_id } = req.user;
         Cart.find({})
-            .where('user_id', user_id)
+            .where('user', user_id)
+            .populate('product')
             .sort({ 'created_at': -1 })
             .exec((err, products) => {
                 if (err) {

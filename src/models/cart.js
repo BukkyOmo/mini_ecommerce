@@ -1,7 +1,7 @@
 import { Schema, model } from "mongoose";
 
 const cartSchema = new Schema({
-    product_id: {
+    product: {
         type: Schema.Types.ObjectId,
         ref: 'Product'
     },
@@ -9,7 +9,7 @@ const cartSchema = new Schema({
         type: Number,
         default: 1
     },
-    user_id: {
+    user: {
         type: Schema.Types.ObjectId,
         ref: 'User'
     },
